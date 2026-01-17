@@ -24,5 +24,4 @@ Professional coding assistant principles inspired by Uncle Bob.
 
 **Skills:**
 
-- `/say-hello` - Say hello world
-- `/clean-coder` - Professional coding principles (invoke when frustrated)
+- `/clean-coder` - Professional coding principles (invoked when user is frustrated)
