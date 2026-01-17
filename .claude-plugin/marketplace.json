@@ -8,14 +8,14 @@
   },
   "plugins": [
     {
-      "name": "hello-world",
-      "description": "A simple hello world plugin that greets the user.",
+      "name": "clean-coder",
+      "description": "Professional coding assistant principles inspired by Uncle Bob",
       "version": "1.0.0",
       "author": {
         "name": "dexhorthy",
         "email": "dex@example.com"
       },
-      "source": "./plugins/hello-world",
+      "source": "./plugins/clean-coder",
       "category": "development"
     }
   ]
