@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "hello-world",
-  "description": "A simple hello world plugin",
+  "name": "slopfiles",
+  "description": "A collection of Claude Code plugins",
   "owner": {
     "name": "dexhorthy",
     "email": "dex@example.com"
@@ -15,7 +15,7 @@
         "name": "dexhorthy",
         "email": "dex@example.com"
       },
-      "source": "./",
+      "source": "./plugins/hello-world",
       "category": "development"
     }
   ]
