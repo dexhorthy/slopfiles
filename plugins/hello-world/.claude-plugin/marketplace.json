@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "hello-world",
+  "description": "A simple hello world plugin",
+  "owner": {
+    "name": "dexhorthy",
+    "email": "dex@example.com"
+  },
+  "plugins": [
+    {
+      "name": "hello-world",
+      "description": "A simple hello world plugin that greets the user.",
+      "version": "1.0.0",
+      "author": {
+        "name": "dexhorthy",
+        "email": "dex@example.com"
+      },
+      "source": "./",
+      "category": "development"
+    }
+  ]
+}
