@@ -1,6 +1,6 @@
 # slopfiles
 
-Claude Code plugins.
+questionably useful claude code plugins
 
 ## Installation
 
