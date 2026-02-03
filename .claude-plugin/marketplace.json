@@ -1,10 +1,13 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "slopfiles",
-  "description": "A collection of Claude Code plugins",
   "owner": {
     "name": "dexhorthy",
     "email": "dex@example.com"
+  },
+  "metadata": {
+    "description": "A collection of Claude Code plugins for clean coding principles and productivity tools",
+    "version": "1.0.0"
   },
   "plugins": [
     {
@@ -17,6 +20,18 @@
       },
       "source": "./plugins/clean-coder",
       "category": "development"
+    },
+    {
+      "name": "html-presentations",
+      "description": "Create beautiful HTML presentations from markdown specs using a Poimandres-themed template",
+      "version": "1.0.0",
+      "author": {
+        "name": "dexhorthy",
+        "email": "dex@example.com"
+      },
+      "source": "./plugins/html-presentations",
+      "category": "productivity",
+      "keywords": ["presentations", "html", "markdown", "slides"]
     }
   ]
 }

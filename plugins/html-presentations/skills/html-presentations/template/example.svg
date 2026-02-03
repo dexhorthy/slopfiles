@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#303340"/>
+  <rect x="10" y="10" width="380" height="280" fill="none" stroke="#5c6078" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="200" y="140" text-anchor="middle" font-family="monospace" font-size="18" fill="#a6accd">your image here</text>
+  <text x="200" y="170" text-anchor="middle" font-family="monospace" font-size="12" fill="#5c6078">400 × 300</text>
+</svg>

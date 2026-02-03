@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Presentation Template</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script type="module">
+            import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: "dark",
+                flowchart: {
+                    nodeSpacing: 80,
+                    rankSpacing: 80,
+                    useMaxWidth: false,
+                },
+                themeVariables: {
+                    fontSize: "24px",
+                    primaryColor: "#303340",
+                    primaryTextColor: "#a6accd",
+                    primaryBorderColor: "#5c6078",
+                    lineColor: "#ADD7FF",
+                    secondaryColor: "#1b1e28",
+                    tertiaryColor: "#1b1e28",
+                    background: "#1b1e28",
+                    mainBkg: "#303340",
+                    nodeBorder: "#5c6078",
+                    clusterBkg: "#1b1e28",
+                    titleColor: "#ffffff",
+                    edgeLabelBackground: "#1b1e28",
+                },
+            });
+            window.mermaid = mermaid;
+        </script>
+        <style>
+            /* ==========================================
+       POIMANDRES THEME
+       ========================================== */
+            :root {
+                --bg: #1b1e28;
+                --bg-alt: #303340;
+                --fg: #a6accd;
+                --fg-bright: #ffffff;
+                --fg-dim: #5c6078;
+                --selection: #717cb425;
+                --accent: #add7ff;
+                --border: #303340;
+                --green: #5de4c7;
+                --yellow: #fffac2;
+                --pink: #d0679d;
+                --cyan: #89ddff;
+                --magenta: #f087bd;
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: "IBM Plex Mono", monospace;
+                background: var(--bg);
+                color: var(--fg);
+                line-height: 1.6;
+            }
+
+            /* ==========================================
+       BASE SLIDE STYLES
+       ========================================== */
+            .slide {
+                display: none;
+                min-height: 100vh;
+                padding: 60px 80px;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .slide.active {
+                display: flex;
+            }
+
+            /* Slide variants */
+            .slide.centered {
+                align-items: center;
+                text-align: center;
+            }
+            .slide.top {
+                justify-content: flex-start;
+                padding-top: 100px;
+            }
+
+            /* ==========================================
+       TYPOGRAPHY
+       ========================================== */
+            .slide h1 {
+                font-size: 3rem;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                color: var(--fg-bright);
+            }
+
+            .slide h2 {
+                font-size: 2.2rem;
+                font-weight: 500;
+                margin-bottom: 1.5rem;
+                color: var(--fg-bright);
+            }
+
+            .slide h3 {
+                font-size: 1.5rem;
+                font-weight: 500;
+                margin-bottom: 1rem;
+                color: var(--fg);
+            }
+
+            .slide p {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+                color: var(--fg);
+            }
+
+            .slide .subtitle {
+                font-size: 1.4rem;
+                color: var(--fg-dim);
+                margin-top: 0.5rem;
+            }
+
+            .slide .small {
+                font-size: 1rem;
+            }
+
+            /* ==========================================
+       LISTS
+       ========================================== */
+            .slide ul,
+            .slide ol {
+                font-size: 1.3rem;
+                margin-left: 0;
+                color: var(--fg);
+                list-style: none;
+            }
+
+            .slide li {
+                margin-bottom: 0.75rem;
+                position: relative;
+                padding-left: 1.8rem;
+            }
+
+            .slide ul li::before {
+                content: "→";
+                position: absolute;
+                left: 0;
+                color: var(--accent);
+            }
+
+            .slide ol {
+                counter-reset: item;
+            }
+            .slide ol li::before {
+                content: counter(item) ".";
+                counter-increment: item;
+                position: absolute;
+                left: 0;
+                color: var(--accent);
+                font-weight: 500;
+            }
+
+            /* ==========================================
+       COLOR UTILITY CLASSES
+       ========================================== */
+            .accent {
+                color: var(--accent);
+            }
+            .green {
+                color: var(--green);
+            }
+            .yellow {
+                color: var(--yellow);
+            }
+            .pink {
+                color: var(--pink);
+            }
+            .cyan {
+                color: var(--cyan);
+            }
+            .magenta {
+                color: var(--magenta);
+            }
+            .muted {
+                color: var(--fg-dim);
+            }
+            .bright {
+                color: var(--fg-bright);
+            }
+
+            /* ==========================================
+       LAYOUTS
+       ========================================== */
+
+            /* Two columns */
+            .columns {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 60px;
+                width: 100%;
+            }
+
+            .columns.narrow-left {
+                grid-template-columns: 1fr 2fr;
+            }
+            .columns.narrow-right {
+                grid-template-columns: 2fr 1fr;
+            }
+
+            .column {
+            }
+
+            /* Split: image left/right */
+            .split {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+                align-items: center;
+                width: 100%;
+            }
+
+            /* ==========================================
+       IMAGES
+       ========================================== */
+            .slide img {
+                max-width: 100%;
+                max-height: 65vh;
+                border-radius: 6px;
+            }
+
+            .slide img.full {
+                max-height: 75vh;
+            }
+
+            .slide img.bordered {
+                border: 1px solid var(--border);
+            }
+
+            .slide img.shadow {
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            }
+
+            /* ==========================================
+       SPECIAL ELEMENTS
+       ========================================== */
+
+            /* Big number/stat */
+            .big-number {
+                font-size: 8rem;
+                font-weight: 700;
+                color: var(--accent);
+                line-height: 1;
+                margin-bottom: 1rem;
+            }
+
+            .big-number.green {
+                color: var(--green);
+            }
+            .big-number.pink {
+                color: var(--pink);
+            }
+
+            /* Quote/blockquote */
+            .quote {
+                font-size: 1.8rem;
+                font-style: italic;
+                color: var(--fg);
+                border-left: 3px solid var(--accent);
+                padding-left: 1.5rem;
+                margin: 1rem 0;
+            }
+
+            .quote-author {
+                font-size: 1.1rem;
+                color: var(--fg-dim);
+                margin-top: 1rem;
+            }
+
+            /* Code block */
+            .code {
+                background: var(--bg-alt);
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                padding: 1.5rem;
+                font-size: 1.1rem;
+                overflow-x: auto;
+                margin: 1rem 0;
+                white-space: pre;
+            }
+
+            /* Mermaid diagrams */
+            .mermaid-wrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                margin: 2rem 0;
+            }
+
+            .mermaid svg {
+                max-width: none !important;
+            }
+
+            /* Gallery */
+            .gallery {
+                display: flex;
+                gap: 40px;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .gallery img {
+                max-height: 200px;
+                max-width: 280px;
+            }
+
+            .gallery-item {
+                text-align: center;
+            }
+
+            .gallery-item p {
+                font-size: 0.9rem;
+                color: var(--fg-dim);
+                margin-top: 0.75rem;
+            }
+
+            .code .comment {
+                color: var(--fg-dim);
+            }
+            .code .keyword {
+                color: var(--magenta);
+            }
+            .code .string {
+                color: var(--green);
+            }
+            .code .function {
+                color: var(--accent);
+            }
+
+            /* Badge/tag */
+            .badge {
+                display: inline-block;
+                background: var(--bg-alt);
+                border: 1px solid var(--border);
+                padding: 0.3rem 0.8rem;
+                border-radius: 4px;
+                font-size: 0.9rem;
+                margin-right: 0.5rem;
+            }
+
+            .badge.accent {
+                background: rgba(173, 215, 255, 0.15);
+                border-color: var(--accent);
+            }
+            .badge.green {
+                background: rgba(93, 228, 199, 0.15);
+                border-color: var(--green);
+            }
+
+            /* Divider */
+            hr {
+                border: none;
+                border-top: 1px solid var(--border);
+                margin: 2rem 0;
+            }
+
+            /* ==========================================
+       NAVIGATION
+       ========================================== */
+            .nav {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                display: flex;
+                gap: 10px;
+            }
+
+            .nav button {
+                font-family: "IBM Plex Mono", monospace;
+                background: var(--bg-alt);
+                color: var(--fg);
+                border: 1px solid var(--border);
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                cursor: pointer;
+                border-radius: 4px;
+                transition: all 0.15s;
+            }
+
+            .nav button:hover {
+                background: #3a3f52;
+                color: var(--fg-bright);
+            }
+
+            .nav button:disabled {
+                opacity: 0.3;
+                cursor: not-allowed;
+            }
+
+            .progress {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                height: 2px;
+                background: var(--accent);
+                transition: width 0.3s;
+            }
+
+            .slide-number {
+                position: fixed;
+                bottom: 35px;
+                left: 30px;
+                color: var(--fg-dim);
+                font-size: 0.85rem;
+            }
+
+            /* ==========================================
+       PROGRESSIVE REVEAL
+       ========================================== */
+            .slide[data-progressive] {
+                justify-content: flex-start;
+                padding-top: 15vh;
+            }
+            .slide[data-progressive] li,
+            .slide[data-progressive] .reveal {
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            .slide[data-progressive] li.visible,
+            .slide[data-progressive] .reveal.visible {
+                opacity: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ==========================================
+       SLIDE 1: Title Slide
+       ========================================== -->
+        <section class="slide centered">
+            <h1>Presentation Title</h1>
+            <p class="subtitle">Subtitle or tagline goes here</p>
+            <p class="small muted" style="margin-top: 3rem">January 2026</p>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 2: Basic Bullets (with progressive reveal)
+       ========================================== -->
+        <section class="slide" data-progressive>
+            <h2>Basic Bullet Points</h2>
+            <ul>
+                <li>
+                    First point with
+                    <span class="accent">highlighted text</span>
+                </li>
+                <li>Second point with some explanation</li>
+                <li>
+                    Third point showing <span class="green">success color</span>
+                </li>
+                <li class="muted">A muted point for less important info</li>
+            </ul>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 3: Numbered List (with progressive reveal)
+       ========================================== -->
+        <section class="slide" data-progressive>
+            <h2>Numbered Steps</h2>
+            <ol>
+                <li>First step in the process</li>
+                <li>Second step builds on the first</li>
+                <li>Third step completes the flow</li>
+            </ol>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 4: Two Columns (with progressive reveal)
+       ========================================== -->
+        <section class="slide" data-progressive>
+            <h2>Two Column Layout</h2>
+            <div class="columns">
+                <div class="column reveal">
+                    <h3 class="accent">Left Column</h3>
+                    <ul>
+                        <li>Point one</li>
+                        <li>Point two</li>
+                        <li>Point three</li>
+                    </ul>
+                </div>
+                <div class="column reveal">
+                    <h3 class="green">Right Column</h3>
+                    <ul>
+                        <li>Another point</li>
+                        <li>More content</li>
+                        <li>Final item</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 5: Image (Centered)
+       ========================================== -->
+        <section class="slide centered">
+            <h2>Centered Image</h2>
+            <img src="example.svg" alt="Example image" class="shadow" />
+            <p class="small muted" style="margin-top: 1rem">
+                Caption text goes here
+            </p>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 6: Split (Image + Text)
+       ========================================== -->
+        <section class="slide">
+            <div class="split">
+                <div>
+                    <img src="example.svg" alt="Example" class="bordered" />
+                </div>
+                <div>
+                    <h2>Image with Text</h2>
+                    <p>
+                        Explanatory text alongside the image. Great for
+                        screenshots with annotations.
+                    </p>
+                    <ul>
+                        <li>Key point one</li>
+                        <li>Key point two</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 7: Big Number / Stat
+       ========================================== -->
+        <section class="slide centered">
+            <div class="big-number">10x</div>
+            <h2>The improvement needed</h2>
+            <p class="muted">To change someone's workflow</p>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 8: Quote
+       ========================================== -->
+        <section class="slide">
+            <h2>Quote Slide</h2>
+            <blockquote class="quote">
+                "The best way to predict the future is to invent it."
+            </blockquote>
+            <p class="quote-author">— Alan Kay</p>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 9: Code Block
+       ========================================== -->
+        <section class="slide">
+            <h2>Code Example</h2>
+            <div class="code">
+                <span class="comment">// Example code block</span>
+                <span class="keyword">const</span>
+                <span class="function">greet</span> = (name) => {
+                <span class="keyword">return</span>
+                <span class="string">`Hello, ${name}!`</span>; };
+            </div>
+            <p class="small muted">Syntax highlighting with manual spans</p>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 10: Statement Slide
+       ========================================== -->
+        <section class="slide centered">
+            <h1 class="accent">One big idea.</h1>
+            <p class="subtitle">Let it breathe.</p>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 11: Badges/Tags (with progressive reveal)
+       ========================================== -->
+        <section class="slide" data-progressive>
+            <h2>Using Badges</h2>
+            <p class="reveal" style="margin-bottom: 1.5rem">
+                <span class="badge accent">Feature</span>
+                <span class="badge green">Shipped</span>
+                <span class="badge">Default</span>
+            </p>
+            <ul>
+                <li>Badges work great for status indicators</li>
+                <li>Or categorizing items visually</li>
+            </ul>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 12: Logo Gallery (with progressive reveal)
+       ========================================== -->
+        <section class="slide centered" data-progressive>
+            <h2>Logo Gallery</h2>
+            <div class="gallery">
+                <div class="gallery-item reveal">
+                    <img src="Riptide-Logo-White-PNG.png" alt="Riptide White" />
+                    <p>White</p>
+                </div>
+                <div class="gallery-item reveal">
+                    <img
+                        src="Riptide-Logo-Electric-Blue-PNG.png"
+                        alt="Riptide Electric Blue"
+                    />
+                    <p>Electric Blue</p>
+                </div>
+                <div class="gallery-item reveal">
+                    <img
+                        src="Riptide-Logo-Light-Blue-PNG.png"
+                        alt="Riptide Light Blue"
+                    />
+                    <p>Light Blue</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 13: Mermaid Diagram
+       ========================================== -->
+        <section class="slide centered">
+            <h2>Mermaid Diagrams</h2>
+            <div class="mermaid-wrapper">
+                <pre class="mermaid">
+graph LR
+    A[Ticket] --> B[Research]
+    B --> C[Plan]
+    C --> D[Implement]
+    D --> E[Review]
+      </pre
+                >
+            </div>
+            <p class="small muted">Flowcharts, sequence diagrams, and more</p>
+        </section>
+
+        <!-- ==========================================
+       SLIDE 14: End Slide
+       ========================================== -->
+        <section class="slide centered">
+            <h1>Thank you</h1>
+            <p class="subtitle">Questions?</p>
+            <hr style="width: 100px; margin: 2rem auto" />
+            <p class="small muted">your@email.com</p>
+        </section>
+
+        <!-- Navigation -->
+        <div class="nav">
+            <button id="prev">← Prev</button>
+            <button id="next">Next →</button>
+        </div>
+
+        <div class="progress" id="progress"></div>
+        <div class="slide-number" id="slideNum"></div>
+
+        <script>
+            const slides = document.querySelectorAll(".slide");
+            let current = 0;
+
+            function getSlideFromHash() {
+                const hash = window.location.hash;
+                const match = hash.match(/#(\d+)/);
+                if (match) {
+                    return Math.max(0, Math.min(parseInt(match[1]) - 1, slides.length - 1));
+                }
+                return 0;
+            }
+
+            function getProgressiveItems(slide) {
+                if (!slide.hasAttribute('data-progressive')) return [];
+                return Array.from(slide.querySelectorAll('li, .reveal'));
+            }
+
+            function revealAllItems(slide) {
+                getProgressiveItems(slide).forEach(el => el.classList.add('visible'));
+            }
+
+            function hideAllItems(slide) {
+                getProgressiveItems(slide).forEach(el => el.classList.remove('visible'));
+            }
+
+            function getNextHiddenItem(slide) {
+                return getProgressiveItems(slide).find(el => !el.classList.contains('visible'));
+            }
+
+            function advance() {
+                const slide = slides[current];
+                const nextHidden = getNextHiddenItem(slide);
+                if (nextHidden) {
+                    nextHidden.classList.add('visible');
+                } else if (current < slides.length - 1) {
+                    showSlide(current + 1);
+                }
+            }
+
+            function goBack() {
+                if (current > 0) {
+                    showSlide(current - 1, true);
+                }
+            }
+
+            async function showSlide(n, showAll = false) {
+                slides[current].classList.remove("active");
+                current = Math.max(0, Math.min(n, slides.length - 1));
+                slides[current].classList.add("active");
+
+                // Progressive reveal: hide all on fresh entry, show all when going back
+                if (showAll) {
+                    revealAllItems(slides[current]);
+                } else {
+                    hideAllItems(slides[current]);
+                }
+
+                // Update URL hash for persistent navigation
+                history.replaceState(null, null, `#${current + 1}`);
+
+                document.getElementById("prev").disabled = current === 0;
+                document.getElementById("next").disabled =
+                    current === slides.length - 1;
+                document.getElementById("progress").style.width =
+                    ((current + 1) / slides.length) * 100 + "%";
+                document.getElementById("slideNum").textContent =
+                    current + 1 + " / " + slides.length;
+
+                // Render mermaid diagrams in the current slide
+                const mermaidEls = slides[current].querySelectorAll(
+                    ".mermaid:not([data-processed])",
+                );
+                if (mermaidEls.length > 0 && window.mermaid) {
+                    await window.mermaid.run({ nodes: mermaidEls });
+                }
+            }
+
+            document.getElementById("prev").onclick = () => goBack();
+            document.getElementById("next").onclick = () => advance();
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowRight" || e.key === " ") advance();
+                if (e.key === "ArrowLeft") goBack();
+                if (e.key === "Home") showSlide(0);
+                if (e.key === "End") showSlide(slides.length - 1, true);
+            });
+
+            // Handle browser back/forward
+            window.addEventListener("hashchange", () => {
+                showSlide(getSlideFromHash());
+            });
+
+            showSlide(getSlideFromHash());
+        </script>
+    </body>
+</html>
