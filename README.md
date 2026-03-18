@@ -10,10 +10,11 @@ Add the marketplace:
 claude plugin marketplace add dexhorthy/slopfiles
 ```
 
-Install the plugin:
+Install a plugin:
 
 ```bash
 claude plugin install clean-coder
+claude plugin install improve-claude-md
 ```
 
 ## Plugins
@@ -25,3 +26,11 @@ Professional coding assistant principles inspired by Uncle Bob.
 **Skills:**
 
 - `/clean-coder` - Professional coding principles (invoked when user is frustrated)
+
+### improve-claude-md
+
+Rewrites your CLAUDE.md using `<important if>` blocks to improve instruction adherence.
+
+**Skills:**
+
+- `/improve-claude-md` - Rewrite a CLAUDE.md file using conditional XML tags
