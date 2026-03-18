@@ -1,15 +1,13 @@
 ---
 name: improve-claude-md
-description: Rewrite a CLAUDE.md file using <important if> blocks to improve instruction adherence
+description: improve a CLAUDE.md file using <important if> blocks to improve instruction adherence
 ---
 
-# Skill: Improve CLAUDE.md
-
-You are an expert at writing high-quality CLAUDE.md files for coding agents. When the user provides a CLAUDE.md file (or asks you to improve one), rewrite it following the principles and structure below.
+When the user provides a CLAUDE.md file (or asks you to improve one), rewrite it following the principles and structure below.
 
 ## Core Problem
 
-Claude Code injects a system reminder with your CLAUDE.md that says:
+Claude Code injects a system reminder with every CLAUDE.md that says:
 
 > "this context may or may not be relevant to your tasks. You should not respond to this context unless it is highly relevant to your task."
 
@@ -18,8 +16,6 @@ This means Claude will ignore parts of your CLAUDE.md it deems irrelevant. The m
 ## Solution: `<important if="condition">` Blocks
 
 Wrap conditionally-relevant sections of the CLAUDE.md in `<important if="condition">` XML tags. This exploits the same XML tag pattern used in Claude Code's own system prompt, giving the model an explicit relevance signal that cuts through the "may or may not be relevant" framing.
-
-Claude models attend strongly to XML-structured instructions. The conditional framing lets the model efficiently skip irrelevant blocks while strongly attending to matching ones, so the instruction-following budget is spent where it counts.
 
 ## Principles
 
@@ -38,7 +34,7 @@ Bad — overly broad conditions that match everything:
 <important if="you are writing or modifying any code">
 - Use absolute imports
 - Use functional components
-- Use kebab-case filenames
+- Use camelCase filenames
 </important>
 ```
 
@@ -54,37 +50,28 @@ Good — each rule has its own narrow trigger:
 </important>
 
 <important if="you are creating new files or directories">
-- Use kebab-case for file and directory names
+- Use camelCase for file and directory names
 </important>
 ```
 
-The condition should describe the specific moment when the instruction matters. Think: "when would I be annoyed if the agent forgot this?"
+### 3. Keep it short, use progressive disclosure sparingly
 
-### 3. Keep it in one file
+Do not shard into separate files that require the agent to make tool calls to discover, unless the extra context is incredibly verbose or complex.
 
-Do not shard into separate files that require the agent to make tool calls to discover. The whole point of `<important if>` blocks is that everything is inline but conditionally weighted — the agent sees it all but only attends to what matches.
+The whole point of `<important if>` blocks is that everything is inline but conditionally weighted — the agent sees it all but only attends to what matches.
+
+Prefer to keep the file concise.
 
 ### 4. Less is more
 
-- Frontier models can reliably follow ~150-200 instructions. Claude Code's system prompt already uses ~50 of those. Your CLAUDE.md should be as lean as possible.
-- Cut any instruction that a linter, formatter, or pre-commit hook can enforce. Never send an LLM to do a linter's job.
+- Frontier models can reliably follow a few hundred. Claude Code's system prompt and tools already use ~50 of those. Your CLAUDE.md should be as lean as possible.
+- Cut any instruction that a linter, formatter, or pre-commit hook can enforce
 - Cut any instruction the agent can discover from existing code patterns. LLMs are in-context learners — if your codebase consistently uses a pattern, the agent will follow it after a few searches.
 - Cut code snippets. They go stale and bloat the file. Use file path references instead (e.g., "see `src/utils/example.ts` for the pattern").
 
-### 5. Cover WHAT, WHY, HOW
-
-The file should onboard the agent into three things:
-- **WHAT**: tech stack, project structure, directory map
-- **WHY**: what the project does and what the parts are for
-- **HOW**: commands to build, test, lint, verify changes
-
-### 6. Keep all commands
+### 5. Keep all commands
 
 Do not drop commands from the original file. The commands table is foundational reference — the agent needs to know what's available even if some commands are used less frequently.
-
-### 7. Never auto-generate
-
-CLAUDE.md is the highest-leverage artifact in the harness — it affects every session, every task, every output. Every line should be deliberately chosen. Do not use `/init` or let the agent generate it.
 
 ## Output Structure
 
@@ -93,28 +80,29 @@ When rewriting a CLAUDE.md, produce this structure:
 ```
 # CLAUDE.md
 
-<one-line project identity — what it is, what it's built with>
+[one-line project identity — what it is, what it's built with]
 
 ## Project map
-<directory listing with brief descriptions>
+[directory listing with brief descriptions]
 
 <important if="you need to run commands to build, test, lint, or generate code">
-<commands table — all commands from the original>
+[commands table — all commands from the original]
 </important>
 
 <important if="<specific trigger for rule 1>">
-<rule 1>
+[rule 1]
 </important>
 
 <important if="<specific trigger for rule 2>">
-<rule 2>
+[rule 2]
 </important>
 
 ... more rules, each with their own block ...
 
 <important if="<specific trigger for domain area 1>">
-## Domain Area 1
-<guidance>
+
+[guidance]
+
 </important>
 
 ... more domain sections ...
@@ -128,9 +116,9 @@ When given an existing CLAUDE.md to improve:
 2. **Extract the directory map** — keep it bare (no `<important if>` wrapper). This is foundational context.
 3. **Extract the tech stack** — if present, keep it bare near the top. Condense to one or two lines.
 4. **Extract commands** — keep ALL commands from the original. Wrap in a single `<important if>` block.
-5. **Break apart rules** — split any list of rules into individual `<important if>` blocks with specific conditions. Never group unrelated rules under one broad condition.
+5. **Break apart rules** — split any list of rules into individual `<important if>` blocks with specific conditions. You can group rules, but never group unrelated rules under one broad condition.
 6. **Wrap domain sections** — testing, API patterns, state management, i18n, etc. each get their own block with a condition describing when that knowledge matters.
-7. **Delete linter territory** — remove style guidelines, formatting rules, and anything enforceable by tooling.
+7. **Delete linter territory** — remove style guidelines, formatting rules, and anything enforceable by tooling. Suggest replacing with pre-push or pre-commit hooks.
 8. **Delete code snippets** — replace with file path references.
 9. **Delete vague instructions** — remove anything like "leverage the X agent" or "follow best practices" that isn't concrete and actionable.
 
@@ -236,7 +224,6 @@ Run with `turbo` from the repo root.
 </important>
 
 <important if="you are adding or modifying API routes">
-## API Development
 
 - All routes go in `apps/api/src/routes/`
 - Use Zod for request validation
@@ -246,7 +233,6 @@ Run with `turbo` from the repo root.
 </important>
 
 <important if="you are writing or modifying tests">
-## Testing
 
 - API: Jest + Supertest
 - Frontend: Vitest + Testing Library
@@ -256,7 +242,6 @@ Run with `turbo` from the repo root.
 </important>
 
 <important if="you are working with state management, stores, or URL parameters">
-## State Management
 
 - Zustand for global client state
 - React Query for server state
